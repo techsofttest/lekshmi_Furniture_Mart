@@ -1,17 +1,19 @@
 "use client";
 
 import { motion } from "framer-motion";
+interface Heritage {
+  span:string;
+  heading:string;
+  content: string;
+  project:{
+    name:string;
+  }[];
+}
+interface HeritageProps {
+  heritage: Heritage;
+}
 
-const projects = [
-  { name: "Marari Beach Resort" },
-  { name: "Coconut Lagoon" },
-  { name: "Flamingo Marari" },
-  { name: "Philipooty Farm" },
-  { name: "Chittoor Palace" },
-  { name: "Kollengode Palace" },
-];
-
-export default function HeritageProjects() {
+export default function HeritageProjects({heritage}:HeritageProps) {
   return (
     <section className="py-24 bg-[#FCFAF8] w-full border-t border-[#592915]/10 relative overflow-hidden">
       {/* Traditional Indian Mandala Background Motif */}
@@ -36,20 +38,18 @@ export default function HeritageProjects() {
           {/* Top: Section Header */}
           <div className="w-full flex flex-col items-center text-center max-w-3xl">
             <span className="text-[#592915] font-sans text-[10px] uppercase tracking-[0.25em] font-bold mb-4 block">
-              Our Prestige
+              {heritage.span}
             </span>
             <h2 className="text-2xl md:text-3xl font-serif text-[#592915] mb-6 leading-tight">
-              Resort &amp; Heritage Projects
+            {heritage.heading}
             </h2>
             <div className="w-14 h-[1.5px] bg-[#592915]/20 mb-6" />
-            <p className="text-[#2A1C14]/70 font-sans text-sm md:text-base leading-relaxed">
-              We have partnered with some of the most exclusive heritage properties, boutique stays, and premium eco-resorts across Kerala. Delivering custom furniture that honors traditional Indian craftsmanship.
-            </p>
+            <p className="text-[#2A1C14]/70 font-sans text-sm md:text-base leading-relaxed">{heritage.content}</p>
           </div>
 
           {/* Bottom: Stylish Boxed Grid (No carousel, no images, no shadows) */}
           <div className="w-full max-w-5xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projects.map((project, idx) => (
+            {heritage.project.map((project, idx) => (
               <motion.div
                 key={idx}
                 initial={{ opacity: 0, y: 15 }}

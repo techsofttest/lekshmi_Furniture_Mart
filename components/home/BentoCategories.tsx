@@ -6,13 +6,21 @@ import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 const MotionLink = motion.create(Link);
+interface Gallery {
+  id: number;
+  category: string;
+  image: string;
+}
 
+interface BentoCategoriesProps {
+  gallery: Gallery[];
+}
 interface ParallaxImageProps {
   src: string;
   alt: string;
 }
 
-function ParallaxImage({ src, alt }: ParallaxImageProps) {
+function ParallaxImage({ src,alt }: ParallaxImageProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -37,7 +45,7 @@ function ParallaxImage({ src, alt }: ParallaxImageProps) {
   );
 }
 
-export default function BentoCategories() {
+export default function BentoCategories({ gallery }: BentoCategoriesProps) {
   return (
     <section className="py-24 bg-[#FCF8F3] w-full relative overflow-hidden">
       <div className="max-w-[1600px] mx-auto px-4 lg:px-8 xl:px-16 relative z-20">
@@ -57,96 +65,51 @@ export default function BentoCategories() {
 
         {/* The Grid: 3 columns on row 1, 2 columns on row 2 */}
         <div className="grid grid-cols-1 md:grid-cols-6 gap-6 xl:gap-8">
+  {gallery.map((item, index) => {
+    const layouts = [
+      "md:col-span-2",
+      "md:col-span-2",
+      "md:col-span-2",
+      "md:col-span-3",
+      "md:col-span-3",
+    ];
 
-          {/* Item 1: THE LIVING EDIT (Row 1, Col 1-2) */}
-          <MotionLink
-            href="/gallery?filter=living"
-            className="relative overflow-hidden group col-span-1 md:col-span-2 h-[300px] sm:h-[350px] md:h-[400px] rounded-sm block"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-          >
-            <ParallaxImage src="/main-cagory/living-room.png" alt="Living" />
-            <div className="absolute inset-0 bg-black/30 group-hover:bg-black/45 transition-colors duration-500" />
-            <div className="absolute inset-0 flex flex-col justify-center items-center text-center p-6">
-              <span className="text-white/80 font-sans text-xs uppercase tracking-[0.25em] mb-1.5 font-light">THE</span>
-              <h3 className="text-2xl md:text-3xl font-serif text-white tracking-[0.1em] uppercase font-normal">LIVING</h3>
-              <span className="text-white/80 font-sans text-xs uppercase tracking-[0.25em] mt-1.5 font-light">EDIT</span>
-            </div>
-          </MotionLink>
+    return (
+      <MotionLink
+        key={item.id}
+        href={`/gallery?filter=${encodeURIComponent(item.category)}`}
+        className={`relative overflow-hidden group col-span-1 ${
+          layouts[index % layouts.length]
+        } h-[300px] sm:h-[350px] md:h-[400px] rounded-sm block`}
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, delay: index * 0.1 }}
+      >
+        <ParallaxImage
+          src={item.image}
+          alt={item.category}
+        />
 
-          {/* Item 2: THE DINING SPACE (Row 1, Col 3-4) */}
-          <MotionLink
-            href="/gallery?filter=dining"
-            className="relative overflow-hidden group col-span-1 md:col-span-2 h-[300px] sm:h-[350px] md:h-[400px] rounded-sm block"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            <ParallaxImage src="/main-cagory/dinin-room.png" alt="Dining" />
-            <div className="absolute inset-0 bg-black/30 group-hover:bg-black/45 transition-colors duration-500" />
-            <div className="absolute inset-0 flex flex-col justify-center items-center text-center p-6">
-              <span className="text-white/80 font-sans text-xs uppercase tracking-[0.25em] mb-1.5 font-light">THE</span>
-              <h3 className="text-2xl md:text-3xl font-serif text-white tracking-[0.1em] uppercase font-normal">DINING</h3>
-              <span className="text-white/80 font-sans text-xs uppercase tracking-[0.25em] mt-1.5 font-light">SPACE</span>
-            </div>
-          </MotionLink>
+        <div className="absolute inset-0 bg-black/35 group-hover:bg-black/50 transition-colors duration-500" />
 
-          {/* Item 3: THE BEDROOM SERIES (Row 1, Col 5-6) */}
-          <MotionLink
-            href="/gallery?filter=bedroom"
-            className="relative overflow-hidden group col-span-1 md:col-span-2 h-[300px] sm:h-[350px] md:h-[400px] rounded-sm block"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-          >
-            <ParallaxImage src="/main-cagory/bed-room.png" alt="Bedroom" />
-            <div className="absolute inset-0 bg-black/30 group-hover:bg-black/45 transition-colors duration-500" />
-            <div className="absolute inset-0 flex flex-col justify-center items-center text-center p-6">
-              <span className="text-white/80 font-sans text-xs uppercase tracking-[0.25em] mb-1.5 font-light">THE</span>
-              <h3 className="text-2xl md:text-3xl font-serif text-white tracking-[0.1em] uppercase font-normal">BEDROOM</h3>
-              <span className="text-white/80 font-sans text-xs uppercase tracking-[0.25em] mt-1.5 font-light">SERIES</span>
-            </div>
-          </MotionLink>
+        <div className="absolute inset-0 flex flex-col justify-center items-center text-center p-6">
+          <span className="text-white/80 text-xs tracking-[0.25em] uppercase mb-2">
+            THE
+          </span>
 
-          {/* Item 4: OFFICE ROOM (Row 2, Col 1-3) */}
-          <MotionLink
-            href="/gallery?filter=custom"
-            className="relative overflow-hidden group col-span-1 md:col-span-3 h-[300px] sm:h-[350px] md:h-[400px] rounded-sm block"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            <ParallaxImage src="/products/office/office-table-1.jpg" alt="Office Room" />
-            <div className="absolute inset-0 bg-black/30 group-hover:bg-black/45 transition-colors duration-500" />
-            <div className="absolute inset-0 flex flex-col justify-center items-center text-center p-6">
-              <span className="text-white/80 font-sans text-xs uppercase tracking-[0.25em] mb-1.5 font-light">THE</span>
-              <h3 className="text-2xl md:text-3xl font-serif text-white tracking-[0.1em] uppercase font-normal">OFFICE</h3>
-              <span className="text-white/80 font-sans text-xs uppercase tracking-[0.25em] mt-1.5 font-light">COLLECTION</span>
-            </div>
-          </MotionLink>
+          <h3 className="text-2xl md:text-3xl font-serif text-white uppercase tracking-[0.1em]">
+            {item.category}
+          </h3>
 
-          {/* Item 5: RESORT & HERITAGE (Row 2, Col 4-6) */}
-          <MotionLink
-            href="/projects"
-            className="relative overflow-hidden group col-span-1 md:col-span-3 h-[300px] sm:h-[350px] md:h-[400px] rounded-sm block"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-          >
-            <ParallaxImage src="/custom-product/c-chair.png" alt="Resort & Heritage Projects" />
-            <div className="absolute inset-0 bg-black/40 group-hover:bg-black/55 transition-colors duration-500" />
-            <div className="absolute inset-0 flex flex-col justify-center items-center text-center p-6">
-              <span className="text-white/80 font-sans text-xs uppercase tracking-[0.25em] mb-1.5 font-light">PREMIUM</span>
-              <h3 className="text-2xl md:text-3xl font-serif text-white tracking-[0.1em] uppercase font-normal">HERITAGE</h3>
-              <span className="text-white/80 font-sans text-xs uppercase tracking-[0.25em] mt-1.5 font-light">PROJECTS</span>
-            </div>
-          </MotionLink>
+          <span className="text-white/80 text-xs tracking-[0.25em] uppercase mt-2">
+            COLLECTION
+          </span>
+        </div>
+      </MotionLink>
+    );
+  })}
+
 
         </div>
       </div>

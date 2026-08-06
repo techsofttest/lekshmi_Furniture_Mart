@@ -5,52 +5,24 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import PrimaryButton from "@/components/global/PrimaryButton";
 
-/**
- * 4-Slide Content Data
- * These explain the custom products and craftsmanship core to the business.
- */
-const slides = [
-  {
-    id: 1,
-    title: "Crafting Your\nPerfect Living Space",
-    description: "Bespoke wooden living room furniture designed for ultimate comfort and timeless elegance, tailored to your home's unique character.",
-    image: "/banner/banner-1.png",
-    cta: "Custom Living",
-    href: "/category/living",
-  },
-  {
-    id: 2,
-    title: "Heritage Grade\nBedroom Elegance",
-    description: "Handcrafted solid teak, wild jack, and jackwood beds that bring warmth, history, and uncompromising quality to your personal sanctuary.",
-    image: "/banner/banner-6.png",
-    cta: "Explore Bedrooms",
-    href: "/category/bedroom",
-  },
-  {
-    id: 3,
-    title: "Gather Around\nTrue Masterpieces",
-    description: "Custom-built dining sets designed for memorable family moments and a lifetime of heritage-grade durability.",
-    image: "/banner/banner-7.png",
-    cta: "Dining Collections",
-    href: "/category/dining",
-  },
-  {
-    id: 4,
-    title: "Precision In\nEvery Carving",
-    description: "Experience the legacy of expert artisans dedicated to preserving traditional Indian wood culture through contemporary bespoke design.",
-    image: "/banner/banner-4.png",
-    cta: "Our Craft",
-    href: "/about",
-  },
-];
+interface Banner{
+  id:string;
+  cta:string;
+  title: string;
+  href: string;
+  image: string;
+}
+interface BannerData{
+  banner:Banner[];
+}
 
-export default function HeroSlider() {
+export default function HeroSlider({banner}:BannerData) {
   const [current, setCurrent] = useState(0);
 
   // Auto-advance every 6 seconds
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % slides.length);
+      setCurrent((prev) => (prev + 1) % banner.length);
     }, 6000);
     return () => clearInterval(timer);
   }, []);
@@ -59,7 +31,7 @@ export default function HeroSlider() {
     <section className="relative h-[70vh] min-h-[400px] w-full overflow-hidden bg-[#1A120E]">
       <AnimatePresence mode="wait">
         <motion.div
-          key={slides[current].id}
+          key={banner[current].id}
           initial={{ opacity: 0, scale: 1.05 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0 }}
@@ -68,8 +40,8 @@ export default function HeroSlider() {
         >
           {/* Background Image */}
           <Image
-            src={slides[current].image}
-            alt={slides[current].title}
+            src={banner[current].image}
+            alt={banner[current].title}
             fill
             sizes="100vw"
             className="object-cover"
@@ -90,13 +62,13 @@ export default function HeroSlider() {
                 className="max-w-xl text-right"
               >
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif text-[#F4ECE1] mb-6 md:leading-[1.1] whitespace-pre-line tracking-wide font-normal">
-                  {slides[current].title}
+                  {banner[current].title}
                 </h1>
                 {/* <p className="text-sm md:text-base font-sans text-white/70 mb-10 leading-relaxed font-light max-w-md ml-auto">
                   {slides[current].description}
                 </p> */}
-                <PrimaryButton href={slides[current].href} variant="light">
-                  {slides[current].cta}
+                <PrimaryButton href={banner[current].href} variant="light">
+                  {banner[current].cta}
                 </PrimaryButton>
               </motion.div>
             </div>
@@ -108,7 +80,7 @@ export default function HeroSlider() {
       <div className="absolute bottom-10 left-6 lg:left-12 xl:left-24 flex items-center gap-8 z-20">
         <span className="text-[#F4ECE1]/80 text-xs font-light font-sans tracking-[0.2em]">0{current + 1}</span>
         <div className="flex gap-4">
-          {slides.map((_, idx) => (
+          {banner.map((_, idx) => (
             <button
               key={idx}
               onClick={() => setCurrent(idx)}

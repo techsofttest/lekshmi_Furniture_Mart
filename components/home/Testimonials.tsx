@@ -3,53 +3,40 @@
 import { useState, useEffect } from 'react';
 import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-
-const testimonials = [
-  {
-    id: 1,
-    name: "Anjali Menon",
-    location: "Kochi",
-    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face",
-    text: "The custom teak dining table we ordered transformed our home. The craftsmanship is exceptional, and the delivery was seamless! Lekshmi Furniture Mart truly understands Kerala's aesthetic.",
-    rating: 5,
-  },
-  {
-    id: 2,
-    name: "Rajesh Kumar",
-    location: "Trivandrum",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face",
-    text: "I've been buying furniture here for 15 years. Quality has never disappointed. The team is knowledgeable and helped us design the perfect bedroom set.",
-    rating: 5,
-  },
-  {
-    id: 3,
-    name: "Maria Joseph",
-    location: "Kottayam",
-    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face",
-    text: "From the first consultation to installation, everything was perfect. The wild jack and jackwood sofa is not just furniture, it's an heirloom we'll pass down to our children.",
-    rating: 5,
-  },
-];
-
-export default function Testimonials() {
+interface Testimony{
+    id:string;
+    name: string;
+    location: string;
+    avatar: string;
+    text: string;
+    rating: string;
+}
+interface TestimonyData{
+testimony:Testimony[]
+}
+export default function Testimonials({testimony}:TestimonyData) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const nextTestimonial = () => {
-    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+    setCurrentIndex((prev) => (prev + 1) % testimony.length);
   };
 
   const prevTestimonial = () => {
-    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+    setCurrentIndex((prev) => (prev - 1 + testimony.length) % testimony.length);
   };
 
-  // Auto-advance every 6 seconds
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-    }, 6000);
-    return () => clearInterval(timer);
-  }, []);
+useEffect(() => {
+  if (!testimony.length) return;
 
+  const timer = setInterval(() => {
+    setCurrentIndex((prev) => (prev + 1) % testimony.length);
+  }, 6000);
+
+  return () => clearInterval(timer);
+}, [testimony.length]);
+if (!testimony || testimony.length === 0) {
+  return null;
+}
   return (
     <section className="py-20 md:py-28 bg-[#FCFAF8] w-full relative overflow-hidden">
       <div className="max-w-5xl mx-auto px-4 lg:px-8 relative z-10">
@@ -109,7 +96,7 @@ export default function Testimonials() {
               >
                 {/* Stars */}
                 <div className="flex items-center justify-center gap-1 mb-8">
-                  {Array.from({ length: testimonials[currentIndex].rating }).map((_, i) => (
+                  {Array.from({ length: Number(testimony[currentIndex].rating) }).map((_, i) => (
                     <Star
                       key={i}
                       size={20}
@@ -120,24 +107,24 @@ export default function Testimonials() {
 
                 {/* Text */}
                 <p className="text-[#2A1C14]/75 font-sans text-base md:text-lg leading-relaxed italic mb-12 text-center">
-                  "{testimonials[currentIndex].text}"
+                  "{testimony[currentIndex].text}"
                 </p>
 
                 {/* Author */}
                 <div className="flex items-center justify-center gap-4">
                   <div className="relative w-14 h-14 rounded-full overflow-hidden">
                     <img
-                      src={testimonials[currentIndex].avatar}
-                      alt={testimonials[currentIndex].name}
+                      src={testimony[currentIndex].avatar}
+                      alt={testimony[currentIndex].name}
                       className="w-full h-full object-cover"
                     />
                   </div>
                   <div className="text-left">
                     <h4 className="font-serif text-[#592915] text-lg">
-                      {testimonials[currentIndex].name}
+                      {testimony[currentIndex].name}
                     </h4>
                     <p className="text-[#2A1C14]/70 font-sans text-xs">
-                      {testimonials[currentIndex].location}
+                      {testimony[currentIndex].location}
                     </p>
                   </div>
                 </div>
@@ -151,7 +138,7 @@ export default function Testimonials() {
 
         {/* Indicators */}
         <div className="flex items-center justify-center gap-3 mt-8">
-          {testimonials.map((_, index) => (
+          {testimony.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentIndex(index)}

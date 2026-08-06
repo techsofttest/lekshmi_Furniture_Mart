@@ -5,8 +5,14 @@ import PrimaryButton from "@/components/global/PrimaryButton";
 import SecondaryButton from "@/components/global/SecondaryButton";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
-
-export default function CTA() {
+interface CtaData{
+  cta: {
+  title:string;
+  description:string;
+  image: string;
+  };
+}
+export default function CTA( {cta}:CtaData) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -21,7 +27,7 @@ export default function CTA() {
       <div className="absolute inset-0 z-0 opacity-50 pointer-events-none overflow-hidden">
         <motion.div style={{ y }} className="absolute inset-x-0 -top-[15%] h-[130%] w-full">
           <Image
-            src="/section-bg/cta2.png"
+            src={cta.image}
             alt="Call to action background"
             fill
             sizes="100vw"
@@ -71,15 +77,11 @@ export default function CTA() {
       >
         {/* Kicker */}
         <span className="text-[#F4ECE1]/80 font-sans text-[10px] md:text-xs uppercase tracking-[0.2em] font-bold mb-6 block">
-          Begin Your Journey
+          {cta.title}
         </span>
 
         {/* CTA Heading */}
-        <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif text-[#F4ECE1] mb-6 leading-tight">
-          Ready to Create Your <br className="hidden sm:block" />
-          <span className="italic">Dream Furniture?</span>
-        </h2>
-
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif text-[#F4ECE1] mb-6 leading-tight [&_i]:italic [&_br]:hidden sm:block" dangerouslySetInnerHTML={{ __html: cta.description }}/>
         {/* CTA Buttons */}
         <div className="flex pt-4 flex-col sm:flex-row items-center justify-center gap-6">
           <PrimaryButton href="/quote" variant="light">

@@ -182,7 +182,7 @@ export const productsData: Product[] = [
     slug: "classic-bedside-dresser-console",
     name: "Classic Bedside Dresser Console",
     description: "A versatile dresser console and bedside companion crafted from high-quality Teak Wood and Plavu. Features ample drawer storage and a polished top surface.",
-    images: ["/products/bed-room/console2.jpg"],
+    images: ["/products/bed-room/console2.jpg","/sub-cat/bed-room cubbord.jpg"],
     details: {
       Material: "Teak Wood & Plavu",
       Dimensions: "42\"W x 18\"D x 32\"H",

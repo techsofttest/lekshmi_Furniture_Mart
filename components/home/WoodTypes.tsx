@@ -4,8 +4,15 @@ import { useRef } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import SecondaryButton from "../global/SecondaryButton";
-
-export default function WoodTypes() {
+interface Woodprops {
+ wood: {
+  span:string;
+  heading:string;
+  content: string;
+  image: string;
+  };
+  }
+export default function WoodTypes({wood} : Woodprops) {
     const sectionRef = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
         target: sectionRef,
@@ -19,7 +26,7 @@ export default function WoodTypes() {
             <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
                 <motion.div style={{ y }} className="absolute inset-x-0 -top-[15%] h-[130%] w-full">
                     <Image
-                        src="/banner/woods.png"
+                        src={wood.image}
                         alt="Premium wood grains"
                         fill
                         sizes="100vw"
@@ -41,21 +48,18 @@ export default function WoodTypes() {
                         transition={{ duration: 0.8 }}
                     >
                         {/* Kicker */}
-                        <span className="text-[#F4ECE1]/80 font-sans text-[10px] md:text-xs uppercase tracking-[0.2em] font-bold mb-6 block">
-                            Our Materials
+                        <span className="text-[#F4ECE1]/80 font-sans text-[10px] md:text-xs uppercase tracking-[0.2em] font-bold mb-6 block ">
+                          {wood.span}
                         </span>
 
-                        <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif text-[#F4ECE1] mb-6 leading-tight">
-                            The Soul of Our Furniture:
-                            <br />
-                            <span className="italic">Premium Heritage Woods</span>
-                        </h2>
+                        <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif text-[#F4ECE1] mb-6 leading-tight" dangerouslySetInnerHTML={{ __html: wood.heading }}/>
+                        
+                            {/* <br />
+                            <span className="italic">Premium Heritage Woods</span> */}
+                        
 
-                        <div className="space-y-6 text-[#F4ECE1]/90 font-sans text-sm md:text-base lg:text-lg leading-relaxed">
-                            <p>
-                                Every masterpiece begins with exceptional materials. We exclusively source mature, high-grade <span className="font-semibold text-white tracking-wide">Teak</span>, <span className="font-semibold text-white tracking-wide">Wild Jack (Anjili)</span>, and <span className="font-semibold text-white tracking-wide">Jackwood</span>, celebrated for their unparalleled durability, rich grains, and timeless beauty. Our commitment extends to using very old woods, which further enhances the quality and character of each furniture piece. This dedication ensures each creation is not just furniture, but a legacy to be cherished for generations.
-                            </p>
-                        </div>
+                        <div className="space-y-6 text-[#F4ECE1]/90 font-sans text-sm md:text-base lg:text-lg leading-relaxed [&>strong]font-semibold [&>strong]text-white [&>strong]tracking-wide" dangerouslySetInnerHTML={{ __html: wood.content }}/>
+
                         {/* <div className="mt-10">
                             <SecondaryButton href="/about" variant="light">
                                 Learn About Our Process

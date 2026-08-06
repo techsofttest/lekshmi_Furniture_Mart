@@ -1,5 +1,4 @@
 import { redirect } from "next/navigation";
-import { categoriesData } from "@/lib/productsData";
 
 interface PageProps {
   params: Promise<{ category: string }>;
@@ -7,9 +6,25 @@ interface PageProps {
 
 export default async function CategoryPage({ params }: PageProps) {
   const { category: categorySlug } = await params;
-  const category = categoriesData.find((c) => c.slug === categorySlug);
-  if (category) {
-    redirect(`/products/${categorySlug}/all`);
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000/api";
+
+  try {
+    // Attempt to validate category against your Laravel API
+    const res = await fetch(`${apiUrl}/products/${categorySlug}/all`, {
+      cache: "no-store",
+    });
+
+    if (res.ok) {
+      redirect(`/products/${categorySlug}/all`);
+    }
+  } catch (error) {
+    // If redirect was thrown by Next.js, let it propagate
+    if ((error as Error).message === "NEXT_REDIRECT") {
+      throw error;
+    }
+    console.error("Error validating category route:", error);
   }
+
+  // Fallback if category doesn't exist or API fails
   redirect("/");
 }

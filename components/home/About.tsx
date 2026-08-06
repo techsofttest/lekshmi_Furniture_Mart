@@ -2,30 +2,46 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { CreditCard, ShieldCheck, Truck, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  CreditCard,
+  ShieldCheck,
+  Truck,
+  Hammer,
+  Sparkles,
+  Sofa,
+  Bed,
+  Home,
+  ChevronLeft,
+  ChevronRight,
+  LucideIcon,
+} from "lucide-react";
 import SecondaryButton from "@/components/global/SecondaryButton";
 import { motion } from "framer-motion";
-
-const keyValues = [
-  {
-    icon: CreditCard,
-    title: "Payment Options",
-    description: "50% Advance Payment / 50% Payment upon Delivery."
-  },
-  {
-    icon: ShieldCheck,
-    title: "Customised Designs",
-    description: "Manufactured exactly to your designs and specific measurements."
-  },
-  {
-    icon: Truck,
-    title: "Delivery & Installation",
-    description: "Factory pick-up, or delivery & on-site installation available (charges apply)."
-  },
-];
-
-export default function AboutSection() {
-  // State to track the slider position (0 to 100 percentage)
+interface About {
+  span:string;
+  heading:string;
+  content: string | null;
+  after?: string | null;
+  before?: string | null;
+  points:{
+    title:string;
+    desc:string;
+    icon:string;
+  }[];
+}interface AboutProps {
+  about?: About;
+}
+export default function AboutSection({about}:AboutProps) {
+const iconMap: Record<string, LucideIcon> = {
+  CreditCard,
+  ShieldCheck,
+  Truck,
+  Hammer,
+  Sparkles,
+  Sofa,
+  Bed,
+  Home,
+};
   const [sliderPos, setSliderPos] = useState(50);
 
   return (
@@ -47,7 +63,7 @@ export default function AboutSection() {
           <div className="absolute inset-0 w-full h-full">
             {/* Replace with your actual 'Before' image */}
             <Image
-              src="/room-change/before.jpg"
+              src={about?.before ?? ""}
               alt="Space before customisation"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
@@ -67,7 +83,7 @@ export default function AboutSection() {
           >
             {/* Replace with your actual 'After' image */}
             <Image
-              src="/room-change/after.png"
+              src={about?.after ?? ""}
               alt="Space after customisation"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
@@ -111,13 +127,11 @@ export default function AboutSection() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <span className="text-[#592915] font-sans text-[10px] uppercase tracking-[0.2em] font-bold mb-4 block">The Lekshmi Experience</span>
+            <span className="text-[#592915] font-sans text-[10px] uppercase tracking-[0.2em] font-bold mb-4 block">{about?.span}</span>
             <h2 className="text-xl md:text-2xl font-serif text-[#592915] mb-4 leading-tight inline-block relative">
-              Bespoke Craftsmanship, Tailored for You
+             {about?.heading}
             </h2>
-            <p className="text-[#2A1C14]/70 font-sans text-sm md:text-normal leading-relaxed mb-8 max-w-2xl mt-6">
-              We are dedicated to crafting heirloom-quality furniture that transforms your living spaces. Our commitment to excellence ensures every piece is built to your exact specifications using premium materials, seamless service, and uncompromising attention to detail. Experience the art of truly bespoke design.
-            </p>
+            <div className="text-[#2A1C14]/70 font-sans text-sm md:text-normal leading-relaxed mb-8 max-w-2xl mt-6" dangerouslySetInnerHTML={{ __html: about?.content ?? ''}}/>
             <SecondaryButton href="/customization" variant="dark">
               Explore Services
             </SecondaryButton>
@@ -125,8 +139,8 @@ export default function AboutSection() {
 
           {/* Shadowless, 3-Column Grid with Lucide Icons */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-10 border-t border-[#592915]/20">
-            {keyValues.map((value, index) => {
-              const Icon = value.icon;
+            {about?.points.map((value, index) => {
+              const Icon = iconMap[value.icon];
               return (
                 <motion.div
                   key={index}
@@ -141,7 +155,7 @@ export default function AboutSection() {
                   </div>
                   <div>
                     <h4 className="text-lg font-serif text-[#592915] mb-2">{value.title}</h4>
-                    <p className="text-[#2A1C14]/70 font-sans text-sm md:text-normal leading-relaxed">{value.description}</p>
+                    <p className="text-[#2A1C14]/70 font-sans text-sm md:text-normal leading-relaxed">{value.desc}</p>
                   </div>
                 </motion.div>
               );

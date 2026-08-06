@@ -4,8 +4,16 @@ import { useRef } from "react";
 import Image from "next/image";
 import SecondaryButton from "@/components/global/SecondaryButton";
 import { motion, useScroll, useTransform } from "framer-motion";
-
-export default function CustomisationSection() {
+interface CustomizedData
+{
+  cuz: {
+  title:string;
+  description:string;
+  image2: string;
+  image: string;
+  };
+}
+export default function CustomisationSection({cuz}:CustomizedData) {
   const leftRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress: leftScroll } = useScroll({
     target: leftRef,
@@ -37,7 +45,7 @@ export default function CustomisationSection() {
               transition={{ duration: 0.8 }}
             >
               <Image
-                src="/custom-banner/custom-2.png"
+                src={cuz.image}
                 alt="Close up of custom joinery and wood finish"
                 fill
                 sizes="(max-width: 1024px) 100vw, 33vw"
@@ -66,14 +74,10 @@ export default function CustomisationSection() {
             </div>
 
             {/* Heading mimicking the cursive "Home of the Hostess" emphasis */}
-            <h2 className="text-xl md:text-2xl font-serif text-[#592915] mb-6 leading-tight">
-              Custom Crafted Furniture
-            </h2>
+            <h2 className="text-xl md:text-2xl font-serif text-[#592915] mb-6 leading-tight">{cuz.title}</h2>
 
             {/* Body Text */}
-            <p className="text-[#2A1C14]/70 font-sans text-sm md:text-normal leading-relaxed mb-10 max-w-sm mx-auto">
-              The newest generation of homeowners are designing spaces differently. In collaboration with our master craftsmen, discover how to bring your unique vision to life with precision and heritage quality.
-            </p>
+            <div className="text-[#2A1C14]/70 font-sans text-sm md:text-normal leading-relaxed mb-10 max-w-sm mx-auto"dangerouslySetInnerHTML={{ __html: cuz.description }}/>
 
             {/* Secondary CTA */}
             <SecondaryButton href="/custom" variant="dark">
@@ -92,7 +96,7 @@ export default function CustomisationSection() {
               transition={{ duration: 0.8 }}
             >
               <Image
-                src="/custom-banner/custom-1.png"
+                src={cuz.image2}
                 alt="Wide view of a fully customized room setting"
                 fill
                 sizes="(max-width: 1024px) 100vw, 33vw"

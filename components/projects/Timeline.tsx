@@ -5,6 +5,17 @@ import { motion } from "framer-motion";
 interface TimelineProps {
   containerVariants: any;
   itemVariants: any;
+    timeline: {
+  span:string;
+  heading:string;
+  content: string;
+  after?: string | null;
+  before?: string | null;
+  points:{
+    title:string;
+    desc:string;
+    number:string;
+  }[];}
 }
 
 const timelineSteps = [
@@ -34,20 +45,18 @@ const timelineSteps = [
   },
 ];
 
-export default function Timeline({ containerVariants, itemVariants }: TimelineProps) {
+export default function Timeline({ containerVariants, itemVariants ,timeline}: TimelineProps) {
   return (
     <section className="py-20 bg-[#FCFAF8] border-y border-[#B28544]/10 -mx-6 lg:-mx-12 xl:-mx-24 px-6 lg:px-12 xl:px-24">
       <div className="max-w-[1600px] mx-auto">
         <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
           <span className="text-[#592915] font-sans text-[10px] uppercase tracking-[0.2em] font-bold block">
-            PARTNERSHIP TIMELINE
+            {timeline.span}
           </span>
           <h2 className="text-xl font-serif text-[#592915]">
-            The Bespoke Journey
+            {timeline.heading}
           </h2>
-          <p className="text-[#2A1C14]/70 font-sans text-sm md:text-normal leading-relaxed">
-            How we collaborate step-by-step to craft legacy furniture tailored exactly to your floorplans.
-          </p>
+          <p className="text-[#2A1C14]/70 font-sans text-sm md:text-normal leading-relaxed" dangerouslySetInnerHTML={{ __html: timeline.content }}/>
         </div>
 
         <motion.div

@@ -3,8 +3,15 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
-
-export default function BrandHistory() {
+interface HistoryData{
+   history: {
+  span:string;
+  heading:string;
+  content: string;
+  image: string;
+  };
+}
+export default function BrandHistory({history}:HistoryData) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -18,7 +25,7 @@ export default function BrandHistory() {
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <motion.div style={{ y }} className="absolute inset-x-0 -top-[15%] h-[130%] w-full">
           <Image
-            src="/section-bg/about.png"
+            src={history.image}
             alt="Brand History Background"
             fill
             sizes="100vw"
@@ -41,25 +48,15 @@ export default function BrandHistory() {
         >
           {/* Kicker */}
           <span className="text-[#F4ECE1]/80 font-sans text-[10px] md:text-xs uppercase tracking-[0.2em] font-bold mb-6 block">
-            Our Story
+            {history.span}
           </span>
 
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif text-[#F4ECE1] mb-6 leading-tight">
-            Our Collaborative
-            <span className="italic">Legacy</span>
-          </h2>
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif text-[#F4ECE1] mb-6 leading-tight [&_i]:italic" dangerouslySetInnerHTML={{ __html: history.heading }}/>
 
           <div className="w-16 h-[1px] bg-white/20 mb-10" />
 
-          <div className="space-y-6 text-[#F4ECE1]/90 font-sans text-sm md:text-base lg:text-lg leading-relaxed">
-            <p>
-              Our roots were established in 1990 with <span className="font-semibold text-white tracking-wide">"Vishnu Furniture Mart"</span>, started by two brothers. Under this legacy, we successfully executed major resort projects including Marari Beach and Coconut Lagoon.
-
-              In 2010, <span className="font-semibold text-white tracking-wide">"Lekshmi Furniture Mart"</span> was established as the next branch, building upon the collaborative legacy and artisanal excellence cultivated over three decades.
-
-              From the selection of premium woods to the final meticulous finish, we specialize in bespoke furniture, allowing you to bring your unique vision to life.
-            </p>
-          </div>
+          <div className="space-y-6 text-[#F4ECE1]/90 font-sans text-sm md:text-base lg:text-lg leading-relaxed [&_strong]:font-semibold [&_strong]:text-white [&_strong]:tracking-wide" dangerouslySetInnerHTML={{ __html: history.content }}/>
+           
         </motion.div>
       </div>
     </section>

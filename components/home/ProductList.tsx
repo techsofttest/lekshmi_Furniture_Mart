@@ -5,33 +5,19 @@ import Card from "@/components/global/Card";
 import { motion, useMotionValue, animate, useAnimationFrame } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-const topSellers = [
-  {
-    title: "King Size Bed",
-    image: "/products/bed-room/bed.jpg",
-    href: "/products/bedroom/king-size-beds/royal-teak-king-bed"
-  },
-  {
-    title: "Long Wooden Chair",
-    image: "/products/chair/long wooden chair.jpeg",
-    href: "/products/dining/dining-chairs-and-benches/royal-heritage-dining-bench"
-  },
-  {
-    title: "Artisan Dining Set",
-    image: "/products/dining/dining-table.jpg",
-    href: "/products/dining/dining-tables/single-slab-teak-dining-table"
-  },
-  {
-    title: "Corner Stand",
-    image: "/products/living/corner-stand1.png",
-    href: "/products/living/shoe-racks/premium-wooden-corner-stand"
-  },
-];
-
+interface Product {
+  title: string;
+  href: string  |"/products/living/shoe-racks/premium-wooden-corner-stand";
+  image: string;
+}
+interface productProps{
+product:Product[];
+}
 // Triple for seamless continuous loop on all screens
-const items = [...topSellers, ...topSellers, ...topSellers];
 
-export default function ProductList() {
+
+export default function ProductList({product}:productProps) {
+  const items = [...product, ...product, ...product];
   const x = useMotionValue(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -162,7 +148,7 @@ export default function ProductList() {
             >
               {items.map((product, idx) => (
                 <div key={idx} className="w-[280px] sm:w-[350px] md:w-[400px] shrink-0">
-                  <Card title={product.title} image={product.image} href={product.href} />
+                  <Card title={product.title} image={product.image} href={product.href || "#"} />
                 </div>
               ))}
             </motion.div>

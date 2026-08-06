@@ -1,27 +1,33 @@
 "use client";
-
-import { Hammer, ShieldCheck, Sparkles } from "lucide-react";
+import {
+  Hammer,
+  ShieldCheck,
+  Sparkles,
+  Sofa,
+  Bed,
+  Home,
+  LucideIcon,
+} from "lucide-react";
 import { motion } from "framer-motion";
 
-const highlightsData = [
-  {
-    icon: Hammer,
-    title: "Customized Designs",
-    description: "Manufactured exactly to your designs, measurements, and models. Not limited to what's displayed.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Wall-Mounted Furniture",
-    description: "Explore our space-saving wall-mounted furniture models.",
-  },
-  {
-    icon: Sparkles,
-    title: "Built on Trust",
-    description: "Three decades of excellence. Designing heirloom-grade furniture for homes across Kerala since 1990.",
-  },
-];
+interface CustomizedData{
+  customized :{
+  desc:string;
+  title: string;
+  icon: string,
+}[]
 
-export default function Highlights() {
+}
+
+export default function Highlights({customized}:CustomizedData) {
+  const iconMap: Record<string, LucideIcon> = {
+  Hammer,
+  ShieldCheck,
+  Sparkles,
+  Sofa,
+  Bed,
+  Home,
+};
   return (
     <section className="py-12 md:py-16 bg-[#1A120E] w-full relative overflow-hidden border-b border-white/10">
 
@@ -84,30 +90,32 @@ export default function Highlights() {
       <div className="max-w-[1600px] mx-auto px-4 lg:px-8 xl:px-16 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 xl:gap-16 text-center">
 
-          {highlightsData.map((item, idx) => {
-            const Icon = item.icon;
-            return (
-              <motion.div
-                key={idx}
-                className="flex flex-col items-center group"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.8, delay: idx * 0.15 }}
-              >
-                {/* Simple Outline Icon */}
-                <div className="w-12 h-12 mb-4 flex items-center justify-center text-[#F4ECE1]/80 group-hover:text-white group-hover:scale-105 transition-all duration-500">
-                  <Icon size={32} strokeWidth={1.2} />
-                </div>
-                <h3 className="text-lg font-serif text-[#F4ECE1] tracking-[0.15em] mb-2 uppercase">
-                  {item.title}
-                </h3>
-                <p className="text-[#F4ECE1]/80 font-sans text-sm md:text-base leading-relaxed max-w-xs">
-                  {item.description}
-                </p>
-              </motion.div>
-            );
-          })}
+       {customized.map((item, idx) => {
+        const Icon = iconMap[item.icon] || Sparkles;
+
+        return (
+          <motion.div
+            key={idx}
+            className="flex flex-col items-center group"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.8, delay: idx * 0.15 }}
+          >
+            <div className="w-12 h-12 mb-4 flex items-center justify-center text-[#F4ECE1]/80 group-hover:text-white group-hover:scale-105 transition-all duration-500">
+              <Icon size={32} strokeWidth={1.2} />
+            </div>
+
+            <h3 className="text-lg font-serif text-[#F4ECE1] tracking-[0.15em] mb-2 uppercase">
+              {item.title}
+            </h3>
+
+            <p className="text-[#F4ECE1]/80 font-sans text-sm md:text-base leading-relaxed max-w-xs">
+              {item.desc}
+            </p>
+          </motion.div>
+        );
+      })}
 
         </div>
       </div>
