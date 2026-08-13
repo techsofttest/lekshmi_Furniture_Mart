@@ -60,7 +60,11 @@ export default function ContactPage({
       icon: MapPin,
       label: "Visit Us",
       lines: contact?.address ? plainAddress.split("\n") : '',
-      href: contact?.map || null,
+      href: contact?.map
+    ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+        "Lekshmi Furniture Mart " + plainAddress
+      )}`
+    : null,
       linkLabel: "Get Directions →",
     },
     {
@@ -182,10 +186,10 @@ export default function ContactPage({
                   {item.label}
                 </p>
                 <div className="flex-1">
-                    <p
+                    <div
                       className="text-sm text-[#2A1C14]/80 font-sans leading-relaxed">
                       {item.lines}
-                    </p>
+                    </div>
                 </div>
                 {item.href && item.linkLabel && (
                   <Link

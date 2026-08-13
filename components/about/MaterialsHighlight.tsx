@@ -49,7 +49,7 @@ export default function MaterialsHighlight({
           className="relative min-h-[400px] lg:min-h-full overflow-hidden"
         >
           <Image
-            src="/craft/carp.png"
+            src={workshop?.i || "/images/workshop.jpg"}
             alt="Master craftsman at work"
             fill
             sizes="(max-width: 1024px) 100vw, 50vw"
@@ -89,11 +89,11 @@ export default function MaterialsHighlight({
                 <span className="text-white/80 font-sans text-[10px] uppercase tracking-[0.3em] font-bold block mb-1" dangerouslySetInnerHTML={{ __html: workshop.desc }}
                 />
               )}
-              {workshop.i && (
+              {/* {workshop.i && (
                 <span className="text-white font-serif text-base italic" dangerouslySetInnerHTML={{ __html: workshop.i }}
                 />
              
-              )}
+              )} */}
             </div>
           )}
         </motion.div>

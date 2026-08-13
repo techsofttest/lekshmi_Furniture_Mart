@@ -159,7 +159,7 @@ export default async function Home() {
       <Testimonials testimony={data.testimony} />
 
       {/*Google Reviews Section */}
-      <GoogleReviews />
+      {/* <GoogleReviews /> */}
 
       {/*CTA Section */}
       <CTA cta={data.cta}  />

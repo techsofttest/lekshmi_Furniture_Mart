@@ -132,7 +132,7 @@ const iconMap: Record<string, LucideIcon> = {
              {about?.heading}
             </h2>
             <div className="text-[#2A1C14]/70 font-sans text-sm md:text-normal leading-relaxed mb-8 max-w-2xl mt-6" dangerouslySetInnerHTML={{ __html: about?.content ?? ''}}/>
-            <SecondaryButton href="/customization" variant="dark">
+            <SecondaryButton href="/custom-designs" variant="dark">
               Explore Services
             </SecondaryButton>
           </motion.div>

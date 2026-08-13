@@ -78,7 +78,7 @@ export default function LocatorPage({ initialData }: LocatorPageProps) {
             {page?.heading ?? "Come, Experience the Craft"}
           </h2>
           <div className="w-14 h-[1.5px] bg-[#592915]/30 mx-auto mt-5" />
-          <p className="text-[#2A1C14]/60 font-sans text-sm md:text-base leading-relaxed mt-5 max-w-xl mx-auto" dangerouslySetInnerHTML={{ __html: page?.description ?? "Visit our showroom to explore our bespoke furniture collection and witness the craftsmanship firsthand." }}/>
+          <div className="text-[#2A1C14]/60 font-sans text-sm md:text-base leading-relaxed mt-5 max-w-xl mx-auto" dangerouslySetInnerHTML={{ __html: page?.description ?? "Visit our showroom to explore our bespoke furniture collection and witness the craftsmanship firsthand." }}/>
         </motion.div>
 
         {/* Map + Details grid */}
@@ -125,7 +125,7 @@ export default function LocatorPage({ initialData }: LocatorPageProps) {
             {contact?.address && (
               <div className="flex gap-3 items-start">
                 <MapPin className="w-4 h-4 text-[#592915] mt-1 flex-shrink-0" />
-                <p className="text-sm text-[#2A1C14]/75 leading-relaxed" dangerouslySetInnerHTML={{ __html: contact.address }}/>
+                <div className="text-sm text-[#2A1C14]/75 leading-relaxed" dangerouslySetInnerHTML={{ __html: contact.address }}/>
               </div>
             )}
 
@@ -221,7 +221,7 @@ export default function LocatorPage({ initialData }: LocatorPageProps) {
               <div className="w-14 h-[1.5px] bg-[#592915]/30 mx-auto mt-5" />
             </motion.div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
+           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto justify-center justify-items-center">
               {about.points.map((item, i) => {
                 const IconComponent = getHowToReachIcon(item.icon);
                 return (
@@ -232,7 +232,9 @@ export default function LocatorPage({ initialData }: LocatorPageProps) {
                     viewport={{ once: true }}
                     custom={i + 1}
                     variants={fadeUp}
-                    className="bg-white border border-gray-100 p-8 rounded-sm flex flex-col gap-4 shadow-sm hover:shadow-md transition-shadow"
+                    className={`bg-white border border-gray-100 p-8 rounded-sm flex flex-col gap-4 shadow-sm hover:shadow-md transition-shadow w-full ${
+                      about.points.length === 1 ? 'sm:col-span-2 max-w-md mx-auto' : ''
+                    }`}
                   >
                     <div className="w-10 h-10 flex items-center justify-center bg-[#F4ECE1] rounded-full flex-shrink-0">
                       <IconComponent className="w-5 h-5 text-[#592915]" />
@@ -249,7 +251,7 @@ export default function LocatorPage({ initialData }: LocatorPageProps) {
                 );
               })}
             </div>
-          </div>
+                      </div>
         </section>
       )}
 

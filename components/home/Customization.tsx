@@ -80,7 +80,7 @@ export default function CustomisationSection({cuz}:CustomizedData) {
             <div className="text-[#2A1C14]/70 font-sans text-sm md:text-normal leading-relaxed mb-10 max-w-sm mx-auto"dangerouslySetInnerHTML={{ __html: cuz.description }}/>
 
             {/* Secondary CTA */}
-            <SecondaryButton href="/custom" variant="dark">
+            <SecondaryButton href="/contact" variant="dark">
               Start Your Project
             </SecondaryButton>
           </motion.div>

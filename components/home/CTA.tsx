@@ -84,7 +84,7 @@ export default function CTA( {cta}:CtaData) {
         <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif text-[#F4ECE1] mb-6 leading-tight [&_i]:italic [&_br]:hidden sm:block" dangerouslySetInnerHTML={{ __html: cta.description }}/>
         {/* CTA Buttons */}
         <div className="flex pt-4 flex-col sm:flex-row items-center justify-center gap-6">
-          <PrimaryButton href="/quote" variant="light">
+          <PrimaryButton href="/contact" variant="light">
             Get a Free Quote
           </PrimaryButton>
         </div>
